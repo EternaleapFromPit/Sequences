@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Microsoft.Extensions.Logging;
 
 namespace SequenceLibrary.Repository
 {
@@ -8,16 +9,19 @@ namespace SequenceLibrary.Repository
     public class MsSqlSequenceRepository : ISequenceRepository
     {
         private readonly DapperContext _context;
+        private readonly ILogger<MsSqlSequenceRepository> _logger;
 
-        public MsSqlSequenceRepository(DapperContext context)
+        public MsSqlSequenceRepository(DapperContext context, ILogger<MsSqlSequenceRepository> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         public async Task<int?> Read(string sequenceName)
         {
             var query = "SELECT value FROM Sequences where name = @sequenceName";
-            Console.WriteLine($"query: {query}");
+            
+            _logger.LogDebug($"query: {query} with parameters {sequenceName}");
             using (var connection = _context.CreateConnection())
             {
                 var result = await connection.QueryFirstOrDefaultAsync(query, new { sequenceName });
@@ -28,7 +32,7 @@ namespace SequenceLibrary.Repository
         public async Task Create(string sequenceName, int value)
         {
             var query = "INSERT INTO Sequences VALUES (@sequenceName, @value)";
-            Console.WriteLine($"query: {query}");
+            _logger.LogDebug($"query: {query} with parameters {sequenceName}, {value}");
             using (var connection = _context.CreateConnection())
             {
                 await connection.QueryAsync(query, new { sequenceName, value });
@@ -38,7 +42,7 @@ namespace SequenceLibrary.Repository
         public async Task Delete(string sequenceName)
         {
             var query = "DELETE FROM Sequences where name = @sequenceName";
-            Console.WriteLine($"query: {query}");
+            _logger.LogDebug($"query: {query} with parameters {sequenceName}");
             using (var connection = _context.CreateConnection())
             {
                 await connection.QueryAsync(query, new { sequenceName });
@@ -48,7 +52,7 @@ namespace SequenceLibrary.Repository
         public async Task Update(string sequenceName, int value)
         {
             var query = "UPDATE Sequences SET value = @value where name = @sequenceName";
-            Console.WriteLine($"query: {query}");
+            _logger.LogDebug($"query: {query} with parameters {value}, {sequenceName}");
             using (var connection = _context.CreateConnection())
             {
                 await connection.QuerySingleOrDefaultAsync(query, new { value, sequenceName });

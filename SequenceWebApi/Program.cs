@@ -1,4 +1,3 @@
-using Microsoft.Extensions.DependencyInjection;
 using SequenceLibrary.Configuration;
 using SequenceLibrary.Repository;
 using SequenceLibrary.Sequences;
@@ -14,8 +13,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<ISequenceConfiguration, SequenceConfiguration>();
 builder.Services.AddSingleton<DapperContext>();
 builder.Services.AddSingleton<ISequenceRepository, MsSqlSequenceRepository>();
-builder.Services.AddSingleton(x => new TemplateSequence(x.GetService<ISequenceConfiguration>().SequenceTemplate, x.GetService<ISequenceRepository>()));
-builder.Services.AddSingleton(x => new NaturalNumbersSequence(x.GetService<ISequenceConfiguration>().SequenceNaturalNumbers, x.GetService<ISequenceRepository>()));
+builder.Services.AddSingleton(x => new TemplateSequence(x.GetRequiredService<ISequenceConfiguration>().SequenceTemplate, x.GetRequiredService<ISequenceRepository>()));
+builder.Services.AddSingleton(x => new NaturalNumbersSequence(x.GetRequiredService<ISequenceConfiguration>().SequenceNaturalNumbers, x.GetRequiredService<ISequenceRepository>()));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -26,32 +25,33 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.Logger.LogInformation("Started");
 
 app.MapGet("/naturalNumberCurrent", () =>
 {
-    Console.WriteLine("naturalNumberCurrent");
-    return app.Services.GetService<NaturalNumbersSequence>().GetCurrent();
+    app.Logger.LogInformation("naturalNumberCurrent request");
+    return app.Services.GetRequiredService<NaturalNumbersSequence>().GetCurrent();
 })
-.WithName("GetCurrentNaturalNumber");
+.WithName("GetCurrentNaturalNumber request");
 
 app.MapGet("/naturalNumberNext", () =>
 {
-    Console.WriteLine("naturalNumberNext");
-    return app.Services.GetService<NaturalNumbersSequence>().GetNext();
+    app.Logger.LogInformation("naturalNumberNext request");
+    return app.Services.GetRequiredService<NaturalNumbersSequence>().GetNext();
 })
 .WithName("GetNextNaturalNumber");
 
 app.MapGet("/templateCurrent", () =>
 {
-    Console.WriteLine("templateCurrent");
-    return app.Services.GetService<TemplateSequence>().GetCurrent();
+    app.Logger.LogInformation("templateCurrent request");
+    return app.Services.GetRequiredService<TemplateSequence>().GetCurrent();
 })
 .WithName("GetCurrentTemplate");
 
 app.MapGet("/templateNext", () =>
 {
-    Console.WriteLine("templateNext");
-    return app.Services.GetService<TemplateSequence>().GetNext();
+    app.Logger.LogInformation("templateNext request");
+    return app.Services.GetRequiredService<TemplateSequence>().GetNext();
 })
 .WithName("GetNextTemplate");
 
