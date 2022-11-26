@@ -12,7 +12,6 @@ namespace SequenceLibrary.Configuration
 
             SequenceNaturalNumbers = config.AppSettings.Settings["sequenceNaturalNumbers"].Value;
             SequenceTemplate = config.AppSettings.Settings["sequenceTemplate"].Value;
-            SequenceCycleCondition = config.AppSettings.Settings["sequenceCycleCondition"].Value;
             ConnectionString = config.AppSettings.Settings["connectionString"].Value;
         }
 

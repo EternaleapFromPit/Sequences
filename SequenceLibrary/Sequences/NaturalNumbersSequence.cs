@@ -1,5 +1,4 @@
 ﻿using SequenceLibrary.Repository;
-using System.Threading;
 
 namespace SequenceLibrary.Sequences
 {
@@ -7,7 +6,6 @@ namespace SequenceLibrary.Sequences
     {
         private int _currentValue;
         private int _startValue;
-        private int _endValue;
         private ISequenceRepository _repository;
         static SemaphoreSlim semaphoreSlim = new SemaphoreSlim(1, 1);
         public const string Name = "NaturalNumbers";
@@ -24,19 +22,21 @@ namespace SequenceLibrary.Sequences
 
             var rangeElems = range.Split('[', ']').Where(x => x != "").First().Split('.').Where(x => x != "");
             _startValue = Convert.ToInt32(rangeElems.First());
-            _endValue = Convert.ToInt32(rangeElems.Last());
+            var endValue = Convert.ToInt32(rangeElems.Last());
 
             if (string.IsNullOrWhiteSpace(range))
             {
                 _startValue = 0;
-                _endValue = int.MaxValue;
+                endValue = int.MaxValue;
             }
 
             var storedValue = _repository.Read(Name)?.Result;
-            _currentValue = storedValue ?? _startValue;
+            _currentValue = storedValue?.Value ?? _startValue;
 
-            if (storedValue == null)
-                repository.Create(Name, _currentValue);
+            if (storedValue?.Value == null)
+                repository.Create(Name, _currentValue, DateTime.Now.Year.ToString());
+            else if (DateTime.Now.Year.ToString() != storedValue.Year) //year had change hence restarting the sequence
+                _currentValue = _startValue;
         }
 
         public string GetCurrent() => _currentValue.ToString();

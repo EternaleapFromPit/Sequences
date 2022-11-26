@@ -8,10 +8,10 @@ namespace TestSequence
     public class TestDatabase
     {
         [Fact]
-        public void Check_connection_established()
+        public async void Check_connection_established()
         {
             var typedCfg = new SequenceConfiguration();
-            var ex = Record.Exception(() => new MsSqlSequenceRepository(new DapperContext(typedCfg), new Mock<ILogger<MsSqlSequenceRepository>>().Object).Read("test").Result);
+            var ex = await Record.ExceptionAsync(async () => { await new MsSqlSequenceRepository(new DapperContext(typedCfg), new Mock<ILogger<MsSqlSequenceRepository>>().Object).Read("test"); });
             Assert.Null(ex);
         }
     }

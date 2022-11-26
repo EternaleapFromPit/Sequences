@@ -1,16 +1,16 @@
-﻿namespace SequenceLibrary.Repository
+﻿using SequenceLibrary.DTO;
+
+namespace SequenceLibrary.Repository
 {
     /// <summary>
-    /// sequences CRUD
+    /// sequences db operation
     /// </summary>
     public interface ISequenceRepository
     {
-        public Task<int?> Read(string sequenceName);
+        public Task<SequenceDto> Read(string sequenceName);
 
-        public Task Create(string sequenceName, int value);
+        public Task Create(string sequenceName, int value, string date);
 
         public Task Update(string sequenceName, int value);
-
-        public Task Delete(string sequenceName);
     }
 }

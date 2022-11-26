@@ -11,8 +11,6 @@
 
         public string SequenceTemplate { get; }
 
-        public string SequenceCycleCondition { get; }
-
         public string ConnectionString { get; }
 
     }

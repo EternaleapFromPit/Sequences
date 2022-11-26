@@ -28,12 +28,17 @@ namespace SequenceLibrary.Sequences
             var rangeElems = _templateElems[2].Split('.').Where(x => x != "");
             _startValue = Convert.ToInt32(rangeElems.First());
             _endValue = Convert.ToInt32(rangeElems.Last());
+            
+            var year = _templateElems[1];
 
             var storedValue = repository.Read(Name)?.Result;
-            _currentValue = storedValue ?? _startValue;
+            _currentValue = storedValue?.Value ?? _startValue;
 
-            if (storedValue == null)
-                _repository.Create(Name, _currentValue);
+            if (storedValue?.Value == null)
+                _repository.Create(Name, _currentValue, year);
+            else if (year != storedValue.Year) //year had change hence restarting the sequence
+                _currentValue = _startValue;
+                
 
             _item = CreateNext();
         }
