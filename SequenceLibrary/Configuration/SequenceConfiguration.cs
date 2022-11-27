@@ -19,8 +19,6 @@ namespace SequenceLibrary.Configuration
 
         public string SequenceTemplate { get; private set; }
 
-        public string SequenceCycleCondition { get; private set; }
-
         public string ConnectionString { get; private set; }
     }
 }
