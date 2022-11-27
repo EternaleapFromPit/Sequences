@@ -51,8 +51,9 @@ namespace SequenceLibrary.Sequences
             try
             {
                 _currentValue++;
+                _item = CreateNext();
                 await _repository.Update(Name, _currentValue);
-                return CreateNext();
+                return _item;
             }
             finally 
             {
@@ -64,8 +65,7 @@ namespace SequenceLibrary.Sequences
         {
             if (_currentValue > _endValue)
                 _currentValue = _startValue;
-            _item = _templateElems[0] + _templateElems[1] + _currentValue;
-            return _item;
+            return _templateElems[0] + _templateElems[1] + _currentValue;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using SequenceLibrary.Repository;
+using System.Security.Policy;
 
 namespace SequenceLibrary.Sequences
 {
@@ -6,6 +7,7 @@ namespace SequenceLibrary.Sequences
     {
         private int _currentValue;
         private int _startValue;
+        private int _endValue;
         private ISequenceRepository _repository;
         static SemaphoreSlim semaphoreSlim = new SemaphoreSlim(1, 1);
         public const string Name = "NaturalNumbers";
@@ -22,12 +24,12 @@ namespace SequenceLibrary.Sequences
 
             var rangeElems = range.Split('[', ']').Where(x => x != "").First().Split('.').Where(x => x != "");
             _startValue = Convert.ToInt32(rangeElems.First());
-            var endValue = Convert.ToInt32(rangeElems.Last());
+            _endValue = Convert.ToInt32(rangeElems.Last());
 
             if (string.IsNullOrWhiteSpace(range))
             {
                 _startValue = 0;
-                endValue = int.MaxValue;
+                _endValue = int.MaxValue;
             }
 
             var storedValue = _repository.Read(Name)?.Result;
@@ -47,6 +49,8 @@ namespace SequenceLibrary.Sequences
             try
             {
                 _currentValue++;
+                if (_currentValue > _endValue)
+                    _currentValue = _startValue;
                 await _repository.Update(Name, _currentValue);
                 return _currentValue.ToString();
             }
@@ -55,5 +59,6 @@ namespace SequenceLibrary.Sequences
                 semaphoreSlim.Release();
             }
         }
+
     }
 }
