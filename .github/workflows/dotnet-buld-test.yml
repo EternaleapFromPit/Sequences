@@ -28,8 +28,4 @@ jobs:
           dotnet publish Sequence.sln -c Release -o "output"
 
           # Pack files
-          if [ "${{ matrix.target }}" == "win-x64" ]; then
-            7z a -tzip "${release_name}.zip" "./${release_name}/*"
-          else
-            tar czvf "${release_name}.tar.gz" "$release_name"
-          fi
+            7z a -tzip "output.zip" "./output/*"
