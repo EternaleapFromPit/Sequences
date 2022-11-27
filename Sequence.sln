@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SequenceGrpcService", "SequenceGrpcService\SequenceGrpcService.csproj", "{D3618C07-4F6A-4277-960A-E23939EAAB3A}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SequenceLibrary", "SequenceLibrary\SequenceLibrary.csproj", "{5B4D0406-ABAD-4B09-AFAA-193C52F01E3D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{423577E2-ADBF-4089-B28C-D8A71BECCBEF}"
@@ -16,7 +14,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestSequence", "TestSequenc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SequenceWebApi", "SequenceWebApi\SequenceWebApi.csproj", "{E36A76B4-AA23-4BE6-B247-E79839DD8C10}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SequenceWebApiClient", "SequenceWebApiClient\SequenceWebApiClient.csproj", "{DA139A3C-DB6F-40F1-B59C-DCA81EF5F2C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SequenceWebApiClient", "SequenceWebApiClient\SequenceWebApiClient.csproj", "{DA139A3C-DB6F-40F1-B59C-DCA81EF5F2C1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,10 +22,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D3618C07-4F6A-4277-960A-E23939EAAB3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D3618C07-4F6A-4277-960A-E23939EAAB3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D3618C07-4F6A-4277-960A-E23939EAAB3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D3618C07-4F6A-4277-960A-E23939EAAB3A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5B4D0406-ABAD-4B09-AFAA-193C52F01E3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5B4D0406-ABAD-4B09-AFAA-193C52F01E3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B4D0406-ABAD-4B09-AFAA-193C52F01E3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
