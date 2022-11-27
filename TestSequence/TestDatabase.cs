@@ -7,7 +7,7 @@ namespace TestSequence
 {
     public class TestDatabase
     {
-        [Fact]
+        [Fact(Skip = "ignored in github pipeline")]
         public async void Check_connection_established()
         {
             var typedCfg = new SequenceConfiguration();
