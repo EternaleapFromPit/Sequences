@@ -6,11 +6,11 @@ using (var client = new HttpClient())
     client.DefaultRequestHeaders.Accept.Clear();
     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-    var blockFirst = RunRequests(1);
-    var blockSecond = RunRequests(2);
-    var blockThird = RunRequests(3);
+    var runnerFirst = RunRequests(1);
+    var runnerSecond = RunRequests(2);
+    var runnerThird = RunRequests(3);
 
-    await Task.WhenAll(Task.Run(() => blockFirst), Task.Run(() => blockSecond), Task.Run(() => blockThird));
+    await Task.WhenAll(Task.Run(() => runnerFirst), Task.Run(() => runnerSecond), Task.Run(() => runnerThird));
 
     async Task RunRequest(int id, string resourceId)
     {
