@@ -20,7 +20,7 @@ namespace SequenceLibrary.Repository
 
         public async Task<SequenceDto> Read(string sequenceName)
         {
-            var query = "SELECT value FROM Sequences where name = @sequenceName";
+            var query = "SELECT value, date FROM Sequences where name = @sequenceName";
             
             _logger.LogDebug($"query: {query} with parameters {sequenceName}");
             using (var connection = _context.CreateConnection())
@@ -32,11 +32,11 @@ namespace SequenceLibrary.Repository
 
         public async Task Create(string sequenceName, int value, string date)
         {
-            var query = "INSERT INTO Sequences VALUES (@sequenceName, @value)";
+            var query = "INSERT INTO Sequences VALUES (@sequenceName, @value, @date)";
             _logger.LogDebug($"query: {query} with parameters {sequenceName}, {value}");
             using (var connection = _context.CreateConnection())
             {
-                await connection.QueryAsync(query, new { sequenceName, value });
+                await connection.QueryAsync(query, new { sequenceName, value, date });
             }
         }
 

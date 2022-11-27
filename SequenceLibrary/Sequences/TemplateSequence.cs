@@ -36,9 +36,8 @@ namespace SequenceLibrary.Sequences
 
             if (storedValue?.Value == null)
                 _repository.Create(Name, _currentValue, year);
-            else if (year != storedValue.Year) //year had change hence restarting the sequence
+            else if (year != storedValue.Year) //year had change hence restarting the sequence (date in template and inside database doesn't match)
                 _currentValue = _startValue;
-                
 
             _item = CreateNext();
         }

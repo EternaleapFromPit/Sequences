@@ -35,7 +35,7 @@ namespace SequenceLibrary.Sequences
 
             if (storedValue?.Value == null)
                 repository.Create(Name, _currentValue, DateTime.Now.Year.ToString());
-            else if (DateTime.Now.Year.ToString() != storedValue.Year) //year had change hence restarting the sequence
+            else if (DateTime.Now.Year.ToString() != storedValue.Year) //year had change hence restarting the sequence (date could be changed in database)
                 _currentValue = _startValue;
         }
 
