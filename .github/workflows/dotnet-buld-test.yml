@@ -29,3 +29,10 @@ jobs:
 
           # Pack files
             7z a -tzip "output.zip" "./output/*"
+             rm -r "output"
+      - name: Push
+        uses: softprops/action-gh-release@v1
+        with:
+          files: "*"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
