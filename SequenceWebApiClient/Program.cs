@@ -39,7 +39,7 @@ using (var client = new HttpClient())
                 Console.WriteLine($"Finishing running method with id {id} on thread {Thread.CurrentThread.ManagedThreadId}");
                 i++;
             }
-        }
+        } //may be profitable to use Task.WaitAll() for each iteration and catch AggragateException in other cases, but not this particular one.
         catch(Exception ex) { Console.WriteLine(ex.ToString()); }
     }
 }
